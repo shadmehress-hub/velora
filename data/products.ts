@@ -277,7 +277,7 @@ const data = {
       category: 'موبایل',
       description:
         'پرچمدار ۲۰۲۶ اپل با طراحی دوربین جدید، بدنه‌ی تیتانیومی و تراشه‌ی فوق‌سریع.',
-      image: '/images/mobile/06.png',
+      image: '/images/mobile/09.png',
       price: 565000000,
       brand: 'Apple',
       stock: 4,
@@ -289,7 +289,7 @@ const data = {
       category: 'موبایل',
       description:
         'فوق‌العاده باریک و سبک با نمایشگر OLED روان و عملکرد بی‌نقص روزمره.',
-      image: '/images/mobile/05.png',
+      image: '/images/mobile/10.png',
       price: 365000000,
       brand: 'Apple',
       stock: 6,
@@ -301,7 +301,7 @@ const data = {
       category: 'موبایل',
       description:
         'نسل جدید آیفون با نمایشگر پرنور، دوربین دوگانه‌ی ارتقایافته و شارژدهی عالی.',
-      image: '/images/mobile/02.png',
+      image: '/images/mobile/11.png',
       price: 385000000,
       brand: 'Apple',
       stock: 5,
@@ -313,7 +313,7 @@ const data = {
       category: 'موبایل',
       description:
         'مجهز به دکمه‌ی کنترل دوربین، تراشه‌ی سریع و رنگ‌بندی مدرن.',
-      image: '/images/mobile/04.png',
+      image: '/images/mobile/12.png',
       price: 295000000,
       brand: 'Apple',
       stock: 7,
@@ -325,7 +325,7 @@ const data = {
       category: 'لپتاپ',
       description:
         'قدرتمندترین مک‌بوک ۲۰۲۶ با تراشه‌ی M5 و نمایشگر XDR برای پردازش‌های سنگین.',
-      image: '/images/macbook/06.png',
+      image: '/images/macbook/09.png',
       price: 420000000,
       brand: 'Apple',
       stock: 3,
@@ -337,7 +337,7 @@ const data = {
       category: 'لپتاپ',
       description:
         'طراحی بسیار سبک و بی‌صدا با تراشه‌ی M4 و شارژدهی تمام‌روز.',
-      image: '/images/macbook/02.png',
+      image: '/images/macbook/10.png',
       price: 315000000,
       brand: 'Apple',
       stock: 5,
@@ -349,7 +349,7 @@ const data = {
       category: 'هدفون',
       description:
         'هدفون روگوشی لوکس اپل با صدای فضایی، حذف نویز فعال و درگاه USB-C.',
-      image: '/images/headphone/01.png',
+      image: '/images/headphone/09.png',
       price: 98000000,
       brand: 'Apple',
       stock: 3,
@@ -361,7 +361,7 @@ const data = {
       category: 'هدفون',
       description:
         'جدیدترین پرچمدار هدفون سونی با حذف نویز هوشمند و کیفیت صدای استودیویی.',
-      image: '/images/headphone/04.png',
+      image: '/images/headphone/10.png',
       price: 88000000,
       brand: 'Sony',
       stock: 5,
