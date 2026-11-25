@@ -10,8 +10,26 @@
 [![Prisma](https://img.shields.io/badge/Prisma-6.19-2d3748?logo=prisma)](https://www.prisma.io/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.3-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
 [![CI](https://github.com/shadmehress-hub/velora/actions/workflows/ci.yml/badge.svg)](https://github.com/shadmehress-hub/velora/actions/workflows/ci.yml)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Vercel-000000?logo=vercel)](https://velora-umber-eight.vercel.app)
+
+**[Live Production Storefront](https://velora-umber-eight.vercel.app)**
 
 </div>
+
+---
+
+## Live Benchmarks (PageSpeed Insights)
+
+Measured on the live production deployment (`https://velora-umber-eight.vercel.app`):
+
+| Platform | Performance | Accessibility | Best Practices | SEO | Agentic Browsing |
+| --- | :---: | :---: | :---: | :---: | :---: |
+| **Desktop** | **100** | **97** | **100** | **100** | **2/2** |
+| **Mobile** | **92** | **97** | **100** | **100** | **2/2** |
+
+| Desktop | Mobile |
+| :---: | :---: |
+| ![PageSpeed Insights Desktop](docs/images/pagespeed-desktop.png) | ![PageSpeed Insights Mobile](docs/images/pagespeed-mobile.png) |
 
 ---
 
