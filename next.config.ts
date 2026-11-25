@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   outputFileTracingIncludes: {
-    "/**": ["./lib/generated/prisma/**/*"],
+    "/**": ["./node_modules/.prisma/client/**/*"],
   },
   images: {
     formats: ["image/avif", "image/webp"],
