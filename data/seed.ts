@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { prisma } from "../lib/prisma";
 
 import data from "./products";
@@ -70,6 +71,20 @@ const SAMPLE_REVIEWS = [
 ];
 
 async function main() {
+  const ifEmpty = process.argv.includes("--if-empty");
+  if (ifEmpty) {
+    const [productCount, userCount] = await Promise.all([
+      prisma.product.count(),
+      prisma.user.count(),
+    ]);
+    if (productCount > 0 || userCount > 0) {
+      console.log(
+        `Database already seeded (${productCount} products, ${userCount} users); skipping --if-empty.`,
+      );
+      return;
+    }
+  }
+
   await prisma.review.deleteMany();
   await prisma.orderItem.deleteMany();
   await prisma.order.deleteMany();

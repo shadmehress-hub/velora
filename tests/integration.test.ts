@@ -1,3 +1,4 @@
+import "dotenv/config";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
@@ -12,7 +13,7 @@ describe("database and assets integrity", () => {
     await prisma.$disconnect();
   });
 
-  it("connects to SQLite and passes health query", async () => {
+  it("connects to database and passes health query", async () => {
     const res = await prisma.$queryRaw`SELECT 1 as ok`;
     assert.ok(Array.isArray(res) && res.length === 1);
   });

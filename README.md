@@ -48,7 +48,7 @@
 | **UI & Styling** | React `19.3`, Tailwind CSS `4.3`, `shadcn` + `@base-ui/react`, `lucide-react`, `next-themes`, `next-persian-fonts` (`Vazirmatn`) |
 | **Language & Validation** | TypeScript `5`, Zod `4.6.7` |
 | **Authentication** | Auth.js v5 (`next-auth@^5.0.0-beta.32`, `@auth/prisma-adapter`, `bcryptjs`) |
-| **Database & ORM** | Prisma `6.19.3` (SQLite locally; PostgreSQL-ready for serverless cloud) |
+| **Database & ORM** | Prisma `6.19.3` (PostgreSQL — Neon / Supabase / Docker Postgres) |
 | **AI Analysis** | Gemini `2.5 Flash` REST integration + built-in Persian NLP fallback |
 | **Testing & CI** | Node built-in test runner (`node:test`) + `tsx`, ESLint `9`, GitHub Actions |
 
@@ -130,7 +130,8 @@ openssl rand -base64 32
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `DATABASE_URL` | Yes | SQLite path (`file:./dev.db`) or PostgreSQL connection URL |
+| `DATABASE_URL` | Yes | PostgreSQL connection URL (Neon, Supabase, or local PostgreSQL) |
+| `DATABASE_URL_UNPOOLED` | Optional | Direct/unpooled PostgreSQL URL used automatically by `prisma migrate deploy` on Neon PgBouncer |
 | `AUTH_SECRET` | Yes | Auth.js v5 JWT encryption/signing secret |
 | `AUTH_URL` | Yes | Canonical auth base URL (e.g. `http://localhost:3000`) |
 | `NEXT_PUBLIC_APP_URL` | Yes | Canonical URL used for OpenGraph, `robots.txt`, and `sitemap.xml` |
@@ -162,12 +163,13 @@ Open [http://localhost:3000](http://localhost:3000).
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Start Next.js 16 Turbopack dev server |
-| `npm run build` | Generate Prisma Client and create production build |
+| `npm run build` | Generate Prisma Client, apply pending migrations, seed if DB is empty, and create production build |
 | `npm run start` | Start compiled Next.js production server |
 | `npm run lint` | Run ESLint across the repository |
 | `npm test` | Run unit & database integration tests (`tests/*.test.ts`) |
 | `npm run db:migrate` | Apply pending Prisma migrations (`prisma migrate deploy`) |
 | `npm run db:seed` | Reset and seed products, demo users, and sample reviews |
+| `npm run db:seed:init` | Idempotently seed database only when empty |
 
 ---
 
@@ -189,49 +191,32 @@ npx tsc --noEmit && npm run lint && npm test && npm run build
 
 ## Production Deployment
 
-### Option A: Vercel + Managed PostgreSQL (Recommended for Serverless)
+### Option A: Vercel + Neon PostgreSQL (Recommended)
 
-Because Vercel serverless functions have a read-only/ephemeral filesystem, switch Prisma from SQLite to a managed PostgreSQL database (such as **Neon**, **Supabase**, or **Vercel Postgres**):
-
-1. Update `provider` in `prisma/schema.prisma`:
-   ```prisma
-   datasource db {
-     provider = "postgresql"
-     url      = env("DATABASE_URL")
-   }
-   ```
-2. Regenerate clean PostgreSQL migrations against your target database:
-   ```bash
-   npx prisma migrate dev --name init_postgres
-   npm run db:seed
-   ```
-3. Import the GitHub repository into **Vercel** and configure the environment variables:
-   - `DATABASE_URL` (PostgreSQL SSL connection string)
-   - `AUTH_SECRET`
+1. Provision a free **Neon Postgres** database in **Vercel Storage** (automatically injects `DATABASE_URL` and `DATABASE_URL_UNPOOLED`).
+2. Import the GitHub repository into **Vercel** and configure the remaining environment variables:
+   - `AUTH_SECRET` (`openssl rand -base64 32`)
    - `AUTH_URL` (`https://your-domain.vercel.app`)
    - `NEXT_PUBLIC_APP_URL` (`https://your-domain.vercel.app`)
    - `GEMINI_API_KEY` *(optional)*
-4. Deploy — Vercel automatically runs `npm run build` (`prisma generate && next build`).
+3. Deploy — `npm run build` automatically runs `prisma generate`, applies PostgreSQL migrations via `DATABASE_URL_UNPOOLED || DATABASE_URL`, seeds initial products/reviews if empty, and compiles Next.js 16.
 
 ### Option B: Docker / Self-Hosted VPS
 
 A multi-stage [`Dockerfile`](Dockerfile) with `/api/health` liveness probing is included:
 
 ```bash
-docker build -t velora:latest .
+docker build --build-arg DATABASE_URL="postgresql://user:pass@host:5432/velora" -t velora:latest .
 
 docker run -d \
   --name velora \
   -p 3000:3000 \
-  -v velora_sqlite:/app/prisma \
-  -e DATABASE_URL="file:./dev.db" \
+  -e DATABASE_URL="postgresql://user:pass@host:5432/velora?sslmode=require" \
   -e AUTH_SECRET="replace-with-32byte-secret" \
   -e AUTH_URL="https://shop.yourdomain.com" \
   -e NEXT_PUBLIC_APP_URL="https://shop.yourdomain.com" \
   velora:latest
 ```
-
-> **Note:** On a persistent Docker volume or dedicated VPS (`npm run build && npm run start` behind Nginx + PM2), SQLite persists normally across restarts. Run `docker exec velora npm run db:seed` on initial boot to populate initial products and sample reviews.
 
 ---
 

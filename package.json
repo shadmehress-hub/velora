@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && prisma migrate deploy && tsx data/seed.ts --if-empty && next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsx --env-file=.env --test tests/*.test.ts",
+    "test": "tsx --test tests/*.test.ts",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
-    "db:seed": "tsx --env-file=.env data/seed.ts"
+    "db:seed": "tsx data/seed.ts",
+    "db:seed:init": "tsx data/seed.ts --if-empty"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.3",

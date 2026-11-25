@@ -1,4 +1,4 @@
-# Multi-stage production Dockerfile for Velora (Next.js 16 + Prisma)
+# Multi-stage production Dockerfile for Velora (Next.js 16 + Prisma + PostgreSQL)
 FROM node:22-slim AS base
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates curl && rm -rf /var/lib/apt/lists/*
@@ -8,26 +8,22 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 COPY prisma ./prisma
 COPY prisma.config.ts ./
-RUN DATABASE_URL="file:./build.db" npm ci
+RUN DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/velora" npm ci
 
-# 2. Build application
+# 2. Build application (pass --build-arg DATABASE_URL=... at build time)
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma Client & build Next.js using a temporary build-time SQLite DB
-# so Cache Components prerendering succeeds without baking runtime data into the image.
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV DATABASE_URL="file:./build.db"
 ENV AUTH_SECRET="build-time-placeholder-secret-replace-at-runtime"
 ENV AUTH_URL="http://localhost:3000"
 ENV NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
-RUN npx prisma generate \
- && npx prisma migrate deploy \
- && npm run build \
- && rm -f prisma/build.db prisma/build.db-journal
+RUN npx prisma generate && npm run build
 
 # 3. Production runtime image
 FROM base AS runner
@@ -51,7 +47,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
 COPY --from=builder --chown=nextjs:nodejs /app/lib ./lib
 COPY --from=builder --chown=nextjs:nodejs /app/next.config.ts ./next.config.ts
-RUN touch .env && chown nextjs:nodejs .env
 
 USER nextjs
 EXPOSE 3000
@@ -59,4 +54,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD curl -f http://localhost:3000/api/health || exit 1
 
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run db:seed:init && npm run start"]
