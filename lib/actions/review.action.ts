@@ -292,6 +292,12 @@ function buildSmartLocalAnalysis(
   };
 }
 
+const GEMINI_REVIEW_MODELS = [
+  "gemini-3.8-flash",
+  "gemini-flash-latest",
+  "gemini-flash-lite-latest",
+] as const;
+
 export async function analyzeProductReviewsAI(
   productId: string,
 ): Promise<{ success: boolean; analysis?: ReviewAIAnalysis; message?: string }> {
@@ -323,10 +329,9 @@ export async function analyzeProductReviewsAI(
     };
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (apiKey) {
-    try {
-      const prompt = `Analyze these Persian customer reviews for "${product.name}" and return ONLY valid JSON with keys:
+    const prompt = `Analyze these Persian customer reviews for "${product.name}" and return ONLY valid JSON with keys:
 {
   "summary": "2-sentence Persian overview",
   "pros": ["up to 4 short Persian pros"],
@@ -337,45 +342,52 @@ export async function analyzeProductReviewsAI(
 Reviews:
 ${reviews.map((r, i) => `${i + 1}. (${r.rating}/5) ${r.title}: ${r.comment}`).join("\n")}`;
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { responseMimeType: "application/json" },
-          }),
-        },
-      );
+    for (const model of GEMINI_REVIEW_MODELS) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            signal: AbortSignal.timeout(4500),
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { responseMimeType: "application/json" },
+            }),
+          },
+        );
 
-      if (response.ok) {
+        if (!response.ok) continue;
+
         const json = await response.json();
-        const text = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (typeof text === "string") {
-          const parsed = JSON.parse(text);
-          if (parsed?.summary && Array.isArray(parsed?.pros)) {
-            return {
-              success: true,
-              analysis: {
-                summary: String(parsed.summary),
-                pros: parsed.pros.slice(0, 4).map(String),
-                cons: Array.isArray(parsed.cons)
-                  ? parsed.cons.slice(0, 3).map(String)
-                  : [],
-                recommendation: String(parsed.recommendation ?? ""),
-                satisfactionPercent: Math.min(
-                  100,
-                  Math.max(0, Number(parsed.satisfactionPercent) || 0),
-                ),
-                source: "gemini",
-              },
-            };
-          }
+        const rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (typeof rawText !== "string") continue;
+
+        const cleaned = rawText
+          .replace(/^```(?:json)?\s*|\s*```$/g, "")
+          .trim();
+        const parsed = JSON.parse(cleaned);
+        if (parsed?.summary && Array.isArray(parsed?.pros)) {
+          return {
+            success: true,
+            analysis: {
+              summary: String(parsed.summary),
+              pros: parsed.pros.slice(0, 4).map(String),
+              cons: Array.isArray(parsed.cons)
+                ? parsed.cons.slice(0, 3).map(String)
+                : [],
+              recommendation: String(parsed.recommendation ?? ""),
+              satisfactionPercent: Math.min(
+                100,
+                Math.max(0, Number(parsed.satisfactionPercent) || 0),
+              ),
+              source: "gemini",
+            },
+          };
         }
+      } catch {
+        // Try next Gemini Flash model or fall back cleanly below
       }
-    } catch {
-      // Fallback cleanly to smart local analyzer below
     }
   }
 

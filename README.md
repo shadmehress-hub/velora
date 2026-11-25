@@ -31,7 +31,7 @@
 - **Iranian Checkout & Zarinpal Mock Payment Flow**:
   - Validated Iranian mobile (`09...`) and 10-digit postal code shipping form (`shippingAddressSchema`), transactional stock deduction (`prisma.$transaction`), automatic shipping fee rules (`FREE_SHIPPING_THRESHOLD`), Zarinpal mock gateway (`/payment/[orderId]`), and order tracking (`/orders`, `/orders/[id]`).
 - **Customer Reviews & AI Insights (`analyzeProductReviewsAI`)**:
-  - Verified-purchase badging, rating distribution breakdown, synchronized aggregate ratings, and AI-generated Persian review summaries (uses Google **Gemini 2.5 Flash** when `GEMINI_API_KEY` is provided, falling back seamlessly to a deterministic Persian keyword sentiment analyzer).
+  - Verified-purchase badging, rating distribution breakdown, synchronized aggregate ratings, and AI-generated Persian review summaries (uses Google **Gemini Flash** when `GEMINI_API_KEY` is provided, falling back seamlessly to a deterministic Persian keyword sentiment analyzer).
 - **Full Admin Portal (`/admin`)**:
   - KPI dashboard with revenue, stock health, and category inventory valuation charts.
   - Inline stock adjustments, product CRUD (`/admin/products/new`, `/admin/products/[id]`), CSV catalog export, order lifecycle status updates (`/admin/orders`), active cart inspection (`/admin/carts`), and user role management (`/admin/users`).
@@ -49,7 +49,7 @@
 | **Language & Validation** | TypeScript `5`, Zod `4.6.7` |
 | **Authentication** | Auth.js v5 (`next-auth@^5.0.0-beta.32`, `@auth/prisma-adapter`, `bcryptjs`) |
 | **Database & ORM** | Prisma `6.19.3` (PostgreSQL — Neon / Supabase / Docker Postgres) |
-| **AI Analysis** | Gemini `2.5 Flash` REST integration + built-in Persian NLP fallback |
+| **AI Analysis** | Gemini Flash REST integration + built-in Persian NLP fallback |
 | **Testing & CI** | Node built-in test runner (`node:test`) + `tsx`, ESLint `9`, GitHub Actions |
 
 ---
@@ -135,7 +135,7 @@ openssl rand -base64 32
 | `AUTH_SECRET` | Yes | Auth.js v5 JWT encryption/signing secret |
 | `AUTH_URL` | Yes | Canonical auth base URL (e.g. `http://localhost:3000`) |
 | `NEXT_PUBLIC_APP_URL` | Yes | Canonical URL used for OpenGraph, `robots.txt`, and `sitemap.xml` |
-| `GEMINI_API_KEY` | Optional | Enables Gemini 2.5 Flash review insights (uses built-in analyzer if omitted) |
+| `GEMINI_API_KEY` | Optional | Enables Gemini Flash review insights (uses built-in analyzer if omitted) |
 
 ### 3. Initialize & Seed Database
 
