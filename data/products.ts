@@ -7,7 +7,7 @@ const data = {
       category: 'موبایل',
       description:
         'عملکرد روان با پردازنده‌ی قوی و دوربین دوگانه‌ی باکیفیت برای استفاده‌ی روزمره.',
-      image: '/images/mobile/01.png',
+      image: '/images/mobile/iphone-13.png',
       price: 130000000,
       brand: 'Apple',
       stock: 5,
@@ -18,7 +18,7 @@ const data = {
       slug: 'macbook-air-m2',
       category: 'لپتاپ',
       description: 'طراحی جدید تخت با صفحه‌نمایش روشن‌تر و عمر باتری بیشتر.',
-      image: '/images/macbook/07.png',
+      image: '/images/macbook/macbook-air-m2.png',
       price: 82000000,
       brand: 'Apple',
       stock: 3,
@@ -42,7 +42,7 @@ const data = {
       category: 'موبایل',
       description:
         'بدنه‌ی تیتانیومی سبک‌تر و پردازنده‌ی جدیدتر برای تجربه‌ی نرم‌تر و سریع‌تر.',
-      image: '/images/mobile/06.png',
+      image: '/images/mobile/iphone-15-pro.png',
       price: 295000000,
       brand: 'Apple',
       stock: 0,
@@ -112,7 +112,7 @@ const data = {
       category: 'موبایل',
       description:
         'سرعت بالا، شارژدهی مناسب و دوربین دقیق برای عکس‌های روزمره.',
-      image: '/images/mobile/03.png',
+      image: '/images/mobile/iphone-14.png',
       price: 165000000,
       brand: 'Apple',
       stock: 8,
@@ -182,7 +182,7 @@ const data = {
       category: 'موبایل',
       description:
         'کیفیت ساخت بالا با جزیره پویا، دوربین سه‌گانه و صفحه‌نمایش روان ۱۲۰ هرتز.',
-      image: '/images/mobile/04.png',
+      image: '/images/mobile/iphone-14-pro.png',
       price: 210000000,
       brand: 'Apple',
       stock: 6,
@@ -217,7 +217,7 @@ const data = {
       category: 'موبایل',
       description:
         'نسل جدید با طراحی بهبود‌یافته، جزیره پویا و عملکرد سریع‌تر در کارهای روزمره.',
-      image: '/images/mobile/05.png',
+      image: '/images/mobile/iphone-15.png',
       price: 275000000,
       brand: 'Apple',
       stock: 2,
@@ -240,9 +240,9 @@ const data = {
       slug: 'wireless-headphones-a3',
       category: 'هدفون',
       description: 'سبک، با کیفیت صدای خوب و اتصال پایدار بلوتوث.',
-      image: '/images/headphone/03.png',
+      image: '/images/headphone/wireless-a3.png',
       price: 5800000,
-      brand: 'هدفون',
+      brand: 'Velora',
       stock: 3,
     },
     {
@@ -288,7 +288,7 @@ const data = {
       category: 'موبایل',
       description:
         'پرچمدار ۲۰۲۶ اپل با طراحی دوربین جدید، بدنه‌ی تیتانیومی و تراشه‌ی فوق‌سریع.',
-      image: '/images/mobile/09.png',
+      image: '/images/mobile/iphone-17-pro-max.png',
       price: 565000000,
       brand: 'Apple',
       stock: 4,
@@ -300,7 +300,7 @@ const data = {
       category: 'موبایل',
       description:
         'فوق‌العاده باریک و سبک با ماژول دوربین تک‌لنزی مدرن، نمایشگر OLED روان و عملکرد بی‌نقص روزمره.',
-      image: '/images/mobile/10.png',
+      image: '/images/mobile/iphone-17-air.png',
       price: 365000000,
       brand: 'Apple',
       stock: 6,
@@ -336,7 +336,7 @@ const data = {
       category: 'لپتاپ',
       description:
         'قدرتمندترین مک‌بوک ۲۰۲۶ با تراشه‌ی M5 و نمایشگر XDR برای پردازش‌های سنگین.',
-      image: '/images/macbook/09.png',
+      image: '/images/macbook/macbook-pro-16-m5.png',
       price: 420000000,
       brand: 'Apple',
       stock: 3,

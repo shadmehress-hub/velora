@@ -35,13 +35,13 @@ const GALLERY_GROUPS = [
   {
     label: "موبایل",
     images: [
-      "/images/mobile/01.png",
-      "/images/mobile/03.png",
-      "/images/mobile/04.png",
-      "/images/mobile/05.png",
-      "/images/mobile/06.png",
-      "/images/mobile/09.png",
-      "/images/mobile/10.png",
+      "/images/mobile/iphone-13.png",
+      "/images/mobile/iphone-14.png",
+      "/images/mobile/iphone-14-pro.png",
+      "/images/mobile/iphone-15.png",
+      "/images/mobile/iphone-15-pro.png",
+      "/images/mobile/iphone-17-pro-max.png",
+      "/images/mobile/iphone-17-air.png",
       "/images/mobile/11.png",
       "/images/mobile/12.png",
     ],
@@ -55,15 +55,15 @@ const GALLERY_GROUPS = [
       "/images/macbook/04.png",
       "/images/macbook/05.png",
       "/images/macbook/06.png",
-      "/images/macbook/07.png",
-      "/images/macbook/09.png",
+      "/images/macbook/macbook-air-m2.png",
+      "/images/macbook/macbook-pro-16-m5.png",
       "/images/macbook/10.png",
     ],
   },
   {
     label: "هدفون",
     images: [
-      "/images/headphone/03.png",
+      "/images/headphone/wireless-a3.png",
       "/images/headphone/04.png",
       "/images/headphone/06.png",
       "/images/headphone/07.png",
@@ -100,7 +100,7 @@ function ProductForm({ product }: { product?: Product }) {
     String(product?.price ?? 0),
   );
   const [image, setImage] = useState(
-    product?.image ?? "/images/mobile/01.png",
+    product?.image ?? "/images/mobile/iphone-13.png",
   );
   const [showGallery, setShowGallery] = useState(false);
 
