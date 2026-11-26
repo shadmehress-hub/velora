@@ -12,7 +12,7 @@ async function Footer() {
           <Logo />
           <p className="text-xs leading-6 text-muted-foreground sm:text-sm">
             فروشگاه اینترنتی ولورا؛ عرضه‌کننده محصولات منتخب دیجیتال، آیفون،
-            مک‌بوک و تجهیزات صوتی با ضمانت اصالت کالا.
+            مک‌بوک، کنسول‌های بازی PS5 و تجهیزات صوتی با ضمانت اصالت کالا.
           </p>
         </div>
 
@@ -41,6 +41,14 @@ async function Footer() {
                 className="transition-colors hover:text-foreground"
               >
                 هدفون
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/search?category=%DA%A9%D9%86%D8%B3%D9%88%D9%84%20%D8%A8%D8%A7%D8%B2%DB%8C"
+                className="transition-colors hover:text-foreground"
+              >
+                کنسول بازی
               </Link>
             </li>
             <li>

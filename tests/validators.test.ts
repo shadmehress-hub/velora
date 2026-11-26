@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import { describe, it } from "node:test";
 
 import data from "../data/products";
@@ -14,12 +16,35 @@ import {
 describe("insertProductSchema", () => {
   it("validates every seeded product in data/products.ts", () => {
     assert.ok(data.products.length >= 32);
+    const seenImages = new Set<string>();
+    const seenSlugs = new Set<string>();
+
     for (const product of data.products) {
       const result = insertProductSchema.safeParse(product);
       assert.equal(
         result.success,
         true,
         `Expected ${product.slug} to pass validation`,
+      );
+      assert.equal(
+        seenSlugs.has(product.slug),
+        false,
+        `Duplicate slug found: ${product.slug}`,
+      );
+      seenSlugs.add(product.slug);
+
+      assert.equal(
+        seenImages.has(product.image),
+        false,
+        `Duplicate image path found: ${product.image}`,
+      );
+      seenImages.add(product.image);
+
+      const diskPath = path.join(process.cwd(), "public", product.image);
+      assert.equal(
+        fs.existsSync(diskPath),
+        true,
+        `Missing image on disk: ${diskPath}`,
       );
     }
   });

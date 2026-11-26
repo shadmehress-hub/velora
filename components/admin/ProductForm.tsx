@@ -29,26 +29,51 @@ const initialState: AdminActionState = {
   message: "",
 };
 
-const CATEGORY_PRESETS = ["موبایل", "لپتاپ", "هدفون"];
+const CATEGORY_PRESETS = ["موبایل", "لپتاپ", "هدفون", "کنسول بازی"];
 
 const GALLERY_GROUPS = [
   {
     label: "موبایل",
-    images: Array.from({ length: 8 }, (_, i) => `/images/mobile/0${i + 1}.png`),
+    images: [
+      "/images/mobile/01.png",
+      "/images/mobile/03.png",
+      "/images/mobile/04.png",
+      "/images/mobile/05.png",
+      "/images/mobile/06.png",
+      "/images/mobile/09.png",
+      "/images/mobile/10.png",
+      "/images/mobile/11.png",
+      "/images/mobile/12.png",
+    ],
   },
   {
     label: "لپتاپ",
-    images: Array.from(
-      { length: 8 },
-      (_, i) => `/images/macbook/0${i + 1}.png`,
-    ),
+    images: [
+      "/images/macbook/01.png",
+      "/images/macbook/02.png",
+      "/images/macbook/03.png",
+      "/images/macbook/04.png",
+      "/images/macbook/05.png",
+      "/images/macbook/06.png",
+      "/images/macbook/07.png",
+      "/images/macbook/09.png",
+      "/images/macbook/10.png",
+    ],
   },
   {
     label: "هدفون",
-    images: Array.from(
-      { length: 8 },
-      (_, i) => `/images/headphone/0${i + 1}.png`,
-    ),
+    images: [
+      "/images/headphone/03.png",
+      "/images/headphone/04.png",
+      "/images/headphone/06.png",
+      "/images/headphone/07.png",
+      "/images/headphone/09.png",
+      "/images/headphone/10.png",
+    ],
+  },
+  {
+    label: "کنسول بازی (PS5)",
+    images: Array.from({ length: 8 }, (_, i) => `/images/ps5/0${i + 1}.jpg`),
   },
 ];
 

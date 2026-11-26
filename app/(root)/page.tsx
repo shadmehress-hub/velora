@@ -39,7 +39,7 @@ async function CategoriesSection() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {categories.map((cat) => (
           <Link
             key={cat.name}
@@ -120,8 +120,8 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="text-sm leading-relaxed text-zinc-300 sm:text-base">
-              جدیدترین مدل‌های آیفون، مک‌بوک و هدفون‌های بی‌سیم را با قیمت
-              به‌روز، گارانتی معتبر و ارسال سریع تهیه کنید.
+              جدیدترین مدل‌های آیفون، مک‌بوک، کنسول‌های بازی PS5 و هدفون‌های
+              حرفه‌ای را با قیمت به‌روز، گارانتی معتبر و ارسال سریع تهیه کنید.
             </p>
           </div>
 
@@ -172,8 +172,8 @@ export default function HomePage() {
       {/* Categories Showcase */}
       <Suspense
         fallback={
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
               <Skeleton key={i} className="h-28 w-full rounded-2xl" />
             ))}
           </div>

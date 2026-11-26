@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-const QUICK_CATEGORIES = ["موبایل", "لپتاپ", "هدفون"];
+const QUICK_CATEGORIES = ["موبایل", "لپتاپ", "هدفون", "کنسول بازی"];
 
 function NotFoundView() {
   return (
